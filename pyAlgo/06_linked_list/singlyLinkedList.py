@@ -85,18 +85,18 @@ class SinglyLinkedList:
     def delete_by_value(self, value: int):
         if not self._head or not value:
             return
-            dummy = Node(value + 1)
-            dummy._next = self._head
+        dummy = Node(value + 1)
+        dummy._next = self._head
 
-            prev, current = dummy, self._head
-            while current:
-                if current.data != value:
-                    prev._next = current
-                    prev = prev._next
-                current = current._next
-            if prev._next:
-                prev._next = None
-            self._head = dummy._next
+        prev, current = dummy, self._head
+        while current:
+            if current.data != value:
+                prev._next = current
+                prev = prev._next
+            current = current._next
+        if prev._next:
+            prev._next = None
+        self._head = dummy._next
 
     def __repr__(self) -> str:
         nums = []
@@ -121,6 +121,43 @@ class SinglyLinkedList:
             print(f"->{current.data}", end="")
             current = current._next
         print("\n", flush=True)
+
+    def remove_nth_from_end(self, head: Node, n: int) -> Optional[Node]:
+        # 删除倒数的第n个节点
+        fast = head
+        count = 0
+        while count < n and fast:
+            fast = fast._next
+            count += 1
+        if not fast and count < n:
+            return head
+        if not fast and count == n:
+            return head._next
+
+    def merge_sorted_list(self, l1: Node, l2: Node) -> Optional[Node]:
+        if l1 and l2:
+            p1, p2 = l1, l2
+            dummy = Node(None)
+            current = dummy
+
+            while p1 and p2:
+                if p1.data <= p2.data:
+                    current._next = p1
+                    p1 = p1._next
+                else:
+                    current._next = p2
+                    p2 = p2._next
+                current = current._next
+            current._next = p1 if p1 else p2
+            return dummy._next
+        return l1 or l2
+
+    def reverse(self, head: Node) -> Optional[Node]:
+        reversed_head = None
+        current = head
+        while current:
+            reversed_head, reversed_head._next, current = current, reversed_head, current._next
+        return reversed_head
 
 
 if __name__ == "__main__":
