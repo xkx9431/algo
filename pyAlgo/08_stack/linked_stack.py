@@ -43,8 +43,9 @@ class LinkedStack():
 if __name__ == "__main__":
     stack = LinkedStack()
     for i in range(9):
+        print('pushing ' + str(i))
         stack.push(i)
     print(stack)
     for _ in range(3):
-        stack.pop()
+        print("poping " + str(stack.pop()))
     print(stack)
